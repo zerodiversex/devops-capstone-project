@@ -36,3 +36,17 @@ spec:
         value: $(params.branch)
       runAfter:
         - init
+      
+    - name: lint
+      workspaces:
+        - name: source
+          workspace: pipeline-workspace
+      taskRef:
+        name: flake8
+      params:
+      - name: image
+        value: "python:3.9-slim"
+      - name: args
+        value: ["--count", "--select=E9,F63,F7,F82", "--show-source","--statistics"]
+      runAfter:
+        - clone 
